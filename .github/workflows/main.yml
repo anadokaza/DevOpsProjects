@@ -1,0 +1,57 @@
+name: Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      
+jobs:
+  build-and-push: 
+    name: Build and Push 
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Login Dockerhub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+    
+    - name: Build Postgre Image
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/postgre:v${{ github.run_number }} -f DockerDB/Dockerfile .
+      working-directory: .
+        
+    - name: Build App Image
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/app:v${{ github.run_number }} .
+
+    - name: Push App image
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/app:v${{ github.run_number }}
+
+    - name: Push Postgre Image
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/postgre:v${{ github.run_number }}
+  update:
+      needs: build-and-push
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+          name: Checkout git repo
+          with:
+            repository: 'cokovskak/EmployeeApp_Kubernetes'
+            token: ${{ secrets.GIT_PASSWORD }}
+        - name: modify image
+          run: |
+            git config user.email cokovskak@gmail.com
+            git config user.name kristina
+            sed -i "s+kristina212006/app.*+kristina212006/app:v${{ github.run_number }}+g" deployment.yaml
+            sed -i "s+kristina212006/postgre.*+kristina212006/postgre:v${{ github.run_number }}+g" statefulset.yaml
+            git add .
+            git status
+            git commit -m "Changed manifests ${{ github.run_number }}"
+            git push origin main
+          env:
+            GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
+            GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
+            RUN_NUMBER: ${{ github.run_number }}
