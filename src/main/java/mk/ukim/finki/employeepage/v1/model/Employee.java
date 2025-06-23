@@ -5,7 +5,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity
+
+@Entity(name = "employee")
 public class Employee {
 
     public Employee() {
