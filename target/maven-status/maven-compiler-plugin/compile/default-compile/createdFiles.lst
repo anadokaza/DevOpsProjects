@@ -1,0 +1,14 @@
+mk/ukim/finki/employeepage/v1/EmployeePageApplication.class
+mk/ukim/finki/employeepage/v1/model/EmployeeType.class
+mk/ukim/finki/employeepage/v1/model/Skill.class
+mk/ukim/finki/employeepage/v1/service/impl/SkillServiceImpl.class
+mk/ukim/finki/employeepage/v1/web/EmployeeController.class
+mk/ukim/finki/employeepage/v1/service/impl/EmployeeServiceImpl.class
+mk/ukim/finki/employeepage/v1/service/SkillService.class
+mk/ukim/finki/employeepage/v1/model/exceptions/InvalidEmployeeIdException.class
+mk/ukim/finki/employeepage/v1/repository/EmployeeRepository.class
+mk/ukim/finki/employeepage/v1/config/DataInitializer.class
+mk/ukim/finki/employeepage/v1/model/Employee.class
+mk/ukim/finki/employeepage/v1/service/EmployeeService.class
+mk/ukim/finki/employeepage/v1/repository/SkillRepository.class
+mk/ukim/finki/employeepage/v1/model/exceptions/InvalidSkillIdException.class

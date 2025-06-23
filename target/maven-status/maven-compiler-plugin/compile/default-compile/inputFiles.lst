@@ -1,0 +1,14 @@
+/home/kristina/Desktop/EmployeeApp/src/main/java/mk/ukim/finki/employeepage/v1/model/Employee.java
+/home/kristina/Desktop/EmployeeApp/src/main/java/mk/ukim/finki/employeepage/v1/repository/SkillRepository.java
+/home/kristina/Desktop/EmployeeApp/src/main/java/mk/ukim/finki/employeepage/v1/repository/EmployeeRepository.java
+/home/kristina/Desktop/EmployeeApp/src/main/java/mk/ukim/finki/employeepage/v1/EmployeePageApplication.java
+/home/kristina/Desktop/EmployeeApp/src/main/java/mk/ukim/finki/employeepage/v1/service/EmployeeService.java
+/home/kristina/Desktop/EmployeeApp/src/main/java/mk/ukim/finki/employeepage/v1/model/exceptions/InvalidSkillIdException.java
+/home/kristina/Desktop/EmployeeApp/src/main/java/mk/ukim/finki/employeepage/v1/service/impl/EmployeeServiceImpl.java
+/home/kristina/Desktop/EmployeeApp/src/main/java/mk/ukim/finki/employeepage/v1/config/DataInitializer.java
+/home/kristina/Desktop/EmployeeApp/src/main/java/mk/ukim/finki/employeepage/v1/model/EmployeeType.java
+/home/kristina/Desktop/EmployeeApp/src/main/java/mk/ukim/finki/employeepage/v1/model/Skill.java
+/home/kristina/Desktop/EmployeeApp/src/main/java/mk/ukim/finki/employeepage/v1/model/exceptions/InvalidEmployeeIdException.java
+/home/kristina/Desktop/EmployeeApp/src/main/java/mk/ukim/finki/employeepage/v1/web/EmployeeController.java
+/home/kristina/Desktop/EmployeeApp/src/main/java/mk/ukim/finki/employeepage/v1/service/SkillService.java
+/home/kristina/Desktop/EmployeeApp/src/main/java/mk/ukim/finki/employeepage/v1/service/impl/SkillServiceImpl.java
