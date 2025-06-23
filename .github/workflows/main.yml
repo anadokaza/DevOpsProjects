@@ -38,22 +38,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        name: Checkout Git Repo
+        name: Checkout manifests repo
         with:
-          repository: 'anadokaza/DevOpsProjects'
-          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: 'anadokaza/DevopsProjectKubernetes'
+          token: ${{ secrets.GIT_PASSWORD }}
 
-      #       - name: Modify image tags in manifests
-      #         run: |
-      #           git config user.email "ana.dokaza@gmail.com"
-      #           git config user.name "anadokaza"
-      #
-      #           sed -i "s+image: ana707/app.*+image: ana707/app:v${{ github.run_number }}+g" deployment.yaml
-      #           sed -i "s+image: ana707/postgre.*+image: ana707/postgre:v${{ github.run_number }}+g" statefulset.yaml
-      #
-      #           git add .
-      #           git commit -m "Updated Docker image tags to v${{ github.run_number }}"
-      #           git push origin main
-      #         env:
-      #           GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
-      #           GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
+      - name: Modify image tags in manifests
+        run: |
+          git config user.email "ana.dokaza@gmail.com"
+          git config user.name "anadokaza"
+
+          sed -i "s+ana707/app.*+ana707/app:v${{ github.run_number }}+g" deployment.yaml
+          sed -i "s+ana707/postgre.*+ana707/postgre:v${{ github.run_number }}+g" statefulset.yaml
+
+          git add .
+          git status
+          git commit -m "Changed manifests ${{ github.run_number }}"
+          git push origin main
+        env:
+          GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
+          GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
+          RUN_NUMBER: ${{ github.run_number }}
