@@ -22,7 +22,7 @@ services:
     image: postgre:latest
     container_name: postgredb
     ports:
-      - "5433:5432"
+      - "5434:5432"
     environment:
        POSTGRES_DB: aplikacija
        POSTGRES_USER: app
