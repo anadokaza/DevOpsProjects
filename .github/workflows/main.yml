@@ -32,7 +32,6 @@ jobs:
 
       - name: Push Postgre Image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/postgre:v${{ github.run_number }}
-
   update:
     needs: build-and-push
     runs-on: ubuntu-latest
