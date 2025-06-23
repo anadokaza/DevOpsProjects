@@ -3,7 +3,7 @@ name: Pipeline
 on:
   push:
     branches:
-      - "*"
+      - main
 
 jobs:
   build-and-push:
@@ -14,15 +14,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Build JAR
-        run: mvn clean package -DskipTests
-
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
@@ -31,6 +22,7 @@ jobs:
 
       - name: Build Postgre Image
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/postgre:v${{ github.run_number }} -f DockerDB/Dockerfile .
+        working-directory: .
 
       - name: Build App Image
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/app:v${{ github.run_number }} .
@@ -44,20 +36,21 @@ jobs:
   update:
     needs: build-and-push
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Kubernetes repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+        name: Checkout Git Repo
         with:
           repository: 'anadokaza/DevOpsProjects'
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GIT_PASSWORD }}
 
       - name: Modify image tags in manifests
         run: |
           git config user.email "ana.dokaza@gmail.com"
           git config user.name "anadokaza"
-          sed -i "s+ana707/app.*+${{ secrets.DOCKER_USERNAME }}/app:v${{ github.run_number }}+g" deployment.yaml
-          sed -i "s+ana707/postgre.*+${{ secrets.DOCKER_USERNAME }}/postgre:v${{ github.run_number }}+g" statefulset.yaml
+
+          sed -i "s+image: ana707/app.*+image: ana707/app:v${{ github.run_number }}+g" deployment.yaml
+          sed -i "s+image: ana707/postgre.*+image: ana707/postgre:v${{ github.run_number }}+g" statefulset.yaml
+
           git add .
           git commit -m "Updated Docker image tags to v${{ github.run_number }}"
           git push origin main
