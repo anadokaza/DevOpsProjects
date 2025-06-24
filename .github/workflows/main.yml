@@ -53,7 +53,7 @@ jobs:
           git add .
           git status
           git diff --cached --quiet || git commit -m "Changed manifests ${{ github.run_number }}"
-          git push origin main
+          git push origin master
         env:
           GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
           GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
