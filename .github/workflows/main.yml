@@ -49,10 +49,10 @@ jobs:
 
           sed -i "s+ana707/app.*+ana707/app:v${{ github.run_number }}+g" deployment.yaml
           sed -i "s+ana707/postgre.*+ana707/postgre:v${{ github.run_number }}+g" statefulset.yaml
-
+          
           git add .
           git status
-          git commit -m "Changed manifests ${{ github.run_number }}"
+          git diff --cached --quiet || git commit -m "Changed manifests ${{ github.run_number }}"
           git push origin main
         env:
           GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
